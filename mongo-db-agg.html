@@ -41,15 +41,23 @@
     .qc{ background-color : #188FAC; }
     .fr{ background-color : #44555F; }
 
+    #controls{
+      position: relative;
+      top:20px;
+      left:20px
+    }
+
   </style>
   <body>
-    <div class="ca legend">Canada</div>
-    <div class="qc legend">Quebec</div>
-    <div class="fr legend">France</div>
-    <form>
-      <label><input type="radio" name="mode" value="grouped" checked> Grouped</label>
-      <label><input type="radio" name="mode" value="average" > Average</label>
-    </form>
+    <div id="controls">
+      <div class="ca legend">Canada</div>
+      <div class="qc legend">Quebec</div>
+      <div class="fr legend">France</div>
+      <form>
+        <label><input type="radio" name="mode" value="grouped" checked> Grouped</label>
+        <label><input type="radio" name="mode" value="average" > Average</label>
+      </form>
+    </div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js" charset="utf-8"></script>
   <script>

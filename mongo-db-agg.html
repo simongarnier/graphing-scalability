@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <style>
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: auto;
+      position: relative;
+      width: 960px;
+    }
+
+    text {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    form {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+  </style>
+  <body>
+    <form>
+      <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+      <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+    </form>
+  </body>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script>
+    var n = 3
+        m = 31
+        stack = d3.layout.stack();
+        layers = stack([
+                        [
+                          {"x":1, "y":916.135991265},
+                          {"x":2, "y":782.304363858},
+                          {"x":3, "y":744.375956574},
+                          {"x":4, "y":859.411698991},
+                          {"x":5, "y":635.878720843},
+                          {"x":6, "y":498.455106642},
+                          {"x":7, "y":640.927461418},
+                          {"x":8, "y":666.282655864},
+                          {"x":9, "y":1177.231626153},
+                          {"x":10, "y":793.23529704},
+                          {"x":11, "y":294.569174953},
+                          {"x":12, "y":29.730708955},
+                          {"x":13, "y":122.266611365},
+                          {"x":14, "y":36.592852756},
+                          {"x":15, "y":15.644567053},
+                          {"x":16, "y":70.826392344},
+                          {"x":17, "y":164.626930853},
+                          {"x":18, "y":88.902184038},
+                          {"x":19, "y":57.552509943},
+                          {"x":20, "y":501.659006514},
+                          {"x":21, "y":795.184447848},
+                          {"x":22, "y":955.971575482},
+                          {"x":23, "y":610.037803227},
+                          {"x":24, "y":468.834789126},
+                          {"x":25, "y":437.813798808},
+                          {"x":26, "y":266.265458175},
+                          {"x":27, "y":299.121025942},
+                          {"x":28, "y":335.470321744},
+                          {"x":29, "y":265.857499706},
+                          {"x":30, "y":381.058270567},
+                          {"x":31, "y":402.897943947}
+                        ],
+                        [
+                          {"x":1, "y":772.79333599},
+                          {"x":2, "y":786.705629165},
+                          {"x":3, "y":799.16662872},
+                          {"x":4, "y":905.690742894},
+                          {"x":5, "y":661.596943974},
+                          {"x":6, "y":486.44552733},
+                          {"x":7, "y":661.428582007},
+                          {"x":8, "y":606.142628822},
+                          {"x":9, "y":988.486217522},
+                          {"x":10, "y":674.903859756},
+                          {"x":11, "y":272.498686197},
+                          {"x":12, "y":30.92693317},
+                          {"x":13, "y":104.249252226},
+                          {"x":14, "y":33.61042545},
+                          {"x":15, "y":12.24080441},
+                          {"x":16, "y":65.112213051},
+                          {"x":17, "y":151.669047336},
+                          {"x":18, "y":90.765587465},
+                          {"x":19, "y":58.476117556},
+                          {"x":20, "y":428.95924805},
+                          {"x":21, "y":720.035926677},
+                          {"x":22, "y":779.697274797},
+                          {"x":23, "y":545.151832861},
+                          {"x":24, "y":504.708505001},
+                          {"x":25, "y":455.689952333},
+                          {"x":26, "y":310.772002354},
+                          {"x":27, "y":350.471965301},
+                          {"x":28, "y":420.107221337},
+                          {"x":29, "y":320.263370261},
+                          {"x":30, "y":424.445373872},
+                          {"x":31, "y":406.623222099}
+                        ],
+                        [
+                          {"x":1, "y":790.276755943},
+                          {"x":2, "y":782.723476253},
+                          {"x":3, "y":780.338778068},
+                          {"x":4, "y":937.690825414},
+                          {"x":5, "y":674.612970799},
+                          {"x":6, "y":518.623726056},
+                          {"x":7, "y":629.891266241},
+                          {"x":8, "y":637.48181678},
+                          {"x":9, "y":955.71192705},
+                          {"x":10, "y":633.649009264},
+                          {"x":11, "y":264.893072944},
+                          {"x":12, "y":27.445023713},
+                          {"x":13, "y":101.319174516},
+                          {"x":14, "y":31.947411862},
+                          {"x":15, "y":12.5933029},
+                          {"x":16, "y":60.714666876},
+                          {"x":17, "y":136.420038376},
+                          {"x":18, "y":76.255703024},
+                          {"x":19, "y":52.713623386},
+                          {"x":20, "y":388.368399087},
+                          {"x":21, "y":735.32387742},
+                          {"x":22, "y":811.163003271},
+                          {"x":23, "y":610.457119943},
+                          {"x":24, "y":463.89549105},
+                          {"x":25, "y":434.091539542},
+                          {"x":26, "y":288.541028982},
+                          {"x":27, "y":358.31354949},
+                          {"x":28, "y":401.447461816},
+                          {"x":29, "y":304.998178206},
+                          {"x":30, "y":377.333485195},
+                          {"x":31, "y":397.122542346}
+                        ]
+                      ])
+        yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
+        yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+
+        var margin = {top: 40, right: 10, bottom: 20, left: 10},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var x = d3.scale.ordinal()
+            .domain(d3.range(1,m+1))
+            .rangeRoundBands([0, width], .08);
+
+        var y = d3.scale.linear()
+            .domain([0, yStackMax])
+            .range([height, 0]);
+
+        var color = d3.scale.linear()
+            .domain([0, n - 1])
+            .range(["#aad", "#556"]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .tickSize(0)
+            .tickPadding(6)
+            .orient("bottom");
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var layer = svg.selectAll(".layer")
+            .data(layers)
+          .enter().append("g")
+            .attr("class", "layer")
+            .style("fill", function(d, i) { return color(i); });
+
+        var rect = layer.selectAll("rect")
+            .data(function(d) { return d; })
+          .enter().append("rect")
+            .attr("x", function(d) { return x(d.x); })
+            .attr("y", height)
+            .attr("width", x.rangeBand())
+            .attr("height", 0);
+
+        rect.transition()
+            .delay(function(d, i) { return i * 10; })
+            .attr("y", function(d) { return y(d.y0 + d.y); })
+            .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        d3.selectAll("input").on("change", change);
+
+        var timeout = setTimeout(function() {
+          d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
+        }, 2000);
+
+        function change() {
+          clearTimeout(timeout);
+          if (this.value === "grouped") transitionGrouped();
+          else transitionStacked();
+        }
+
+        function transitionGrouped() {
+          y.domain([0, yGroupMax]);
+
+          rect.transition()
+              .duration(500)
+              .delay(function(d, i) { return i * 10; })
+              .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+              .attr("width", x.rangeBand() / n)
+            .transition()
+              .attr("y", function(d) { return y(d.y); })
+              .attr("height", function(d) { return height - y(d.y); });
+        }
+
+        function transitionStacked() {
+          y.domain([0, yStackMax]);
+
+          rect.transition()
+              .duration(500)
+              .delay(function(d, i) { return i * 10; })
+              .attr("y", function(d) { return y(d.y0 + d.y); })
+              .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+            .transition()
+              .attr("x", function(d) { return x(d.x); })
+              .attr("width", x.rangeBand());
+        }
+
+  </script>
+</html>

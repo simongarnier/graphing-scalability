@@ -190,13 +190,15 @@
             .scale(x)
             .tickSize(0)
             .tickPadding(6)
-            .orient("bottom");
+            .orient("bottom")
+            .tickFormat(function(d){return "7/"+d});
 
         var yAxis = d3.svg.axis()
             .scale(y)
             .tickSize(-width)
             .tickPadding(5)
             .orient("left")
+            .tickFormat(function(d) {return d+"s"});
 
         var svg = d3.select("body").append("svg")
             .attr("width", width + margin.left + margin.right)

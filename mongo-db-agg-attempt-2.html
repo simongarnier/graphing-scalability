@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <style>
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: auto;
+      position: relative;
+      width: 960px;
+    }
+
+    text {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    form {
+      position: relative;
+      left: 0;
+      top: 10px;
+    }
+
+    .legend{
+      width : 150px;
+      height: 20px;
+      text-align : center;
+    }
+
+    .ca{ background-color : #B5BBBE; }
+    .qc{ background-color : #188FAC; }
+    .fr{ background-color : #44555F; }
+
+    #controls{
+      position: relative;
+      top:20px;
+      left:20px
+    }
+
+  </style>
+  <body>
+    <div id="controls">
+      <div class="ca legend">Canada</div>
+      <div class="qc legend">Quebec</div>
+      <div class="fr legend">France</div>
+      <form>
+        <label><input type="radio" name="mode" value="grouped" checked> Grouped</label>
+        <label><input type="radio" name="mode" value="average" > Average</label>
+      </form>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js" charset="utf-8"></script>
+  <script>
+    var n = 3
+        m = 31
+        stack = d3.layout.stack()
+        layers = stack([
+                        [
+                          {"x":1, "y":749.186720024},
+                          {"x":2, "y":766.710493224},
+                          {"x":3, "y":796.605723514},
+                          {"x":4, "y":796.969743461},
+                          {"x":5, "y":576.984887307},
+                          {"x":6, "y":444.684365661},
+                          {"x":7, "y":510.210229131},
+                          {"x":8, "y":521.651877866},
+                          {"x":9, "y":927.699725451},
+                          {"x":10, "y":655.26138208},
+                          {"x":11, "y":287.542390478},
+                          {"x":12, "y":25.421505337},
+                          {"x":13, "y":107.548435662},
+                          {"x":14, "y":31.951154108},
+                          {"x":15, "y":13.367581675},
+                          {"x":16, "y":64.130075271},
+                          {"x":17, "y":147.644946548},
+                          {"x":18, "y":80.784525394},
+                          {"x":19, "y":54.797568386},
+                          {"x":20, "y":392.424599557},
+                          {"x":21, "y":732.255257625},
+                          {"x":22, "y":830.212430376},
+                          {"x":23, "y":535.041896986},
+                          {"x":24, "y":428.497179951},
+                          {"x":25, "y":415.391679078},
+                          {"x":26, "y":264.798913314},
+                          {"x":27, "y":300.963735043},
+                          {"x":28, "y":340.506468902},
+                          {"x":29, "y":276.414850999},
+                          {"x":30, "y":409.171589888},
+                          {"x":31, "y":428.619931994}
+                        ],
+                        [
+                          {"x":1, "y":767.714746638},
+                          {"x":2, "y":731.733421221},
+                          {"x":3, "y":773.93293693},
+                          {"x":4, "y":834.200342193},
+                          {"x":5, "y":633.650074372},
+                          {"x":6, "y":475.232743413},
+                          {"x":7, "y":568.866037753},
+                          {"x":8, "y":556.289601459},
+                          {"x":9, "y":978.389149461},
+                          {"x":10, "y":719.351677525},
+                          {"x":11, "y":303.273086919},
+                          {"x":12, "y":30.242022432},
+                          {"x":13, "y":117.988129497},
+                          {"x":14, "y":35.658027281},
+                          {"x":15, "y":12.725898986},
+                          {"x":16, "y":65.366229688},
+                          {"x":17, "y":153.522967076},
+                          {"x":18, "y":86.747471831},
+                          {"x":19, "y":59.029678236},
+                          {"x":20, "y":429.677512671},
+                          {"x":21, "y":784.282902433},
+                          {"x":22, "y":863.628831156},
+                          {"x":23, "y":621.962732951},
+                          {"x":24, "y":491.849610889},
+                          {"x":25, "y":455.136387249},
+                          {"x":26, "y":289.676330725},
+                          {"x":27, "y":324.531956569},
+                          {"x":28, "y":361.010031433},
+                          {"x":29, "y":287.262683309},
+                          {"x":30, "y":400.104296769},
+                          {"x":31, "y":438.760633383}
+                        ],
+                        [
+                          {"x":1, "y":856.208782553},
+                          {"x":2, "y":792.037185909},
+                          {"x":3, "y":801.677701873},
+                          {"x":4, "y":864.698002834},
+                          {"x":5, "y":674.827905899},
+                          {"x":6, "y":513.053798597},
+                          {"x":7, "y":544.057256365},
+                          {"x":8, "y":532.460460093},
+                          {"x":9, "y":935.025772456},
+                          {"x":10, "y":677.756419608},
+                          {"x":11, "y":306.061628492},
+                          {"x":12, "y":31.125964434},
+                          {"x":13, "y":121.926870162},
+                          {"x":14, "y":35.716443443},
+                          {"x":15, "y":14.084742914},
+                          {"x":16, "y":68.354032395},
+                          {"x":17, "y":158.950647943},
+                          {"x":18, "y":84.763237115},
+                          {"x":19, "y":61.168609891},
+                          {"x":20, "y":425.392215834},
+                          {"x":21, "y":814.267543101},
+                          {"x":22, "y":857.09827885},
+                          {"x":23, "y":573.770427259},
+                          {"x":24, "y":488.901931843},
+                          {"x":25, "y":456.960537459},
+                          {"x":26, "y":287.496414173},
+                          {"x":27, "y":352.392422929},
+                          {"x":28, "y":395.217427836},
+                          {"x":29, "y":312.593776328},
+                          {"x":30, "y":438.628759445},
+                          {"x":31, "y":446.416477397}
+                        ]
+                      ])
+        yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
+        yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+
+        avg = []
+
+        layers[n-1].forEach(function(day){
+          avg.push((day.y0 + day.y)/n)
+        })
+
+        layers.forEach(function(layer){
+          layer.forEach(function(day){
+            day["avg"] = avg[day.x - 1]
+          })
+        })
+
+        var margin = {top: 40, right: 10, bottom: 20, left: 50},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var x = d3.scale.ordinal()
+            .domain(d3.range(1,m+1))
+            .rangeRoundBands([0, width], .09);
+
+        var y = d3.scale.linear()
+            .domain([0, 1200])
+            .range([height, 0]);
+
+        var color = ["#B5BBBE", "#188FAC", "#44555F"]
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .tickSize(0)
+            .tickPadding(6)
+            .orient("bottom")
+            .tickFormat(function(d){return "7/"+d});
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .tickSize(-width)
+            .tickPadding(5)
+            .orient("left")
+            .tickFormat(function(d) {return d+"s"});
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var layer = svg.selectAll(".layer")
+            .data(layers)
+            .enter().append("g")
+            .attr("class", "layer")
+            .style("fill", function(d, i) { return color[i]; });
+
+        var rect = layer.selectAll("rect")
+            .data(function(d) { return d; })
+            .enter().append("rect")
+            .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+            .attr("y", height)
+            .attr("width", x.rangeBand() / n )
+            .attr("height", 0);
+
+        rect.transition()
+            .delay(function(d, i) { return i * 10; })
+            .attr("y", function(d) { return y(d.y); })
+            .attr("height", function(d) { return y(d.y0) - y( d.y0 + d.y); });
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        d3.selectAll("input").on("change", change);
+
+        var timeout = setTimeout(function() {
+          d3.select("input[value=\"average\"]").property("checked", true).each(change);
+        }, 2000);
+
+        function change() {
+          clearTimeout(timeout);
+          if (this.value === "grouped") transitionGrouped();
+          else transitionAvg();
+        }
+
+        function transitionGrouped() {
+          rect.transition()
+              .delay(function(d, i) { return i * 10; })
+              .attr("y", function(d) { return y(d.y); })
+              .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+          .transition()
+              .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+              .attr("width", x.rangeBand() / n);
+        }
+
+        function transitionAvg() {
+          rect.transition()
+              .delay(function(d, i) { return i * 10; })
+              .attr("y", function(d) { return y(d.avg); })
+              .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.avg); })
+          .transition()
+              .attr("x", function(d) { return x(d.x); })
+              .attr("width", x.rangeBand());
+        }
+
+  </script>
+</html>

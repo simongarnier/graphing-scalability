@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MongDB scalability test</title>
+  </head>
+  <style>
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: auto;
+      position: relative;
+      width: 960px;
+    }
+
+    text {
+      font: 10px sans-serif;
+    }
+
+    form {
+      position: relative;
+      left: 0;
+      top: 10px;
+    }
+
+    path {
+      stroke: steelblue;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .axis {
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis line {
+      stroke: lightgrey;
+    }
+
+    .x.axis .minor {
+      stroke-opacity: .5;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .y.axis line, .y.axis path {
+      fill: none;
+      stroke: #000;
+    }
+
+  </style>
+  <body>
+    <div id="controls">
+      <form>
+        <label><input type="radio" name="mode" value="grouped" checked> Grouped</label>
+        <label><input type="radio" name="mode" value="average" > Average</label>
+      </form>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js" charset="utf-8"></script>
+  <script>
+    var n = 5
+        m = 22
+        data =  [
+                  { "x" : 7078643, "y" : [ 0.000686373, 0.000432412, 0.000425941, 0.000411745, 0.000410669 ] },
+                  { "x" : 14540423, "y" : [ 0.0008504, 0.000459383, 0.000425501, 0.000446362, 0.000435175 ] },
+                  { "x" : 22229044, "y" : [ 0.000636311, 0.000453457, 0.000444739, 0.00043065, 0.000429557 ] },
+                  { "x" : 32371777, "y" : [ 0.000695036, 0.000442331, 0.000410653, 0.000427627, 0.000423215 ] },
+                  { "x" : 38336884, "y" : [ 38.597551857, 0.000656714, 0.000445254, 0.000438374, 0.000426053 ] },
+                  { "x" : 43154955, "y" : [ 55.860122922, 0.000669774, 0.000424155, 0.000435529, 0.000432129 ] },
+                  { "x" : 48153006, "y" : [ 35.174358964, 0.00062162, 0.000416801, 0.000407935, 0.000399823 ] },
+                  { "x" : 54434598, "y" : [ 33.560756526, 0.000660308, 0.000429089, 0.000419392, 0.000414576 ] },
+                  { "x" : 61280825, "y" : [ 33.900210722, 0.000673134, 0.000424024, 0.000413603, 0.000415364 ] },
+                  { "x" : 67068945, "y" : [ 42.999511508, 20.74993645, 0.000676772, 0.000432947, 0.000423791 ] },
+                  { "x" : 69774650, "y" : [ 34.318863095, 20.125902731, 0.000668444, 0.000431147, 0.000415463 ] },
+                  { "x" : 69906543, "y" : [ 31.086922095, 16.835555087, 0.00066716, 0.00043523, 0.000451527 ] },
+                  { "x" : 70375796, "y" : [ 31.203944823, 16.812130086, 0.000682308, 0.000448189, 0.000430428 ] },
+                  { "x" : 70508574, "y" : [ 30.941555648, 16.753918722, 0.000677574, 0.00045109, 0.000420287 ] },
+                  { "x" : 70565882, "y" : [ 31.327432791, 16.798433863, 0.164427868, 0.000638173, 0.000421366 ] },
+                  { "x" : 70760249, "y" : [ 32.799486955, 20.186860975, 0.163307083, 0.000647381, 0.000433982 ] },
+                  { "x" : 71185515, "y" : [ 35.564878387, 28.231849518, 0.2137605, 0.000641514, 0.000422865 ] },
+                  { "x" : 71490035, "y" : [ 38.5720987, 17.316990561, 0.192840501, 0.000641576, 0.000438379 ] },
+                  { "x" : 71664121, "y" : [ 35.054404799, 17.901227976, 0.170884508, 0.000653069, 0.000442173 ] },
+                  { "x" : 72472949, "y" : [ 40.247048491, 19.63382447, 0.622181741, 2.672678125, 0.000678505 ] },
+                  { "x" : 88520662, "y" : [ 202.933520861, 185.204250482, 1.155826636, 23.280926644, 0.000696212 ] },
+                  { "x" : 93915780, "y" : [ 119.12600584, 95.547319877, 0.678978645, 12.35340169, 0.000720116 ] }
+                ];
+        xMax = d3.max(data, function(d) { return d.x});
+        yMax = d3.max(data, function(d) { return d3.max(d.y, function(v) { return v }); });
+        i = 0
+
+    data.forEach(function(d){
+      total = 0
+      d["y"].forEach(function(v) {
+        total += v
+      })
+      d["avg"] = total/d["y"].length
+    })
+
+    var margin = {top: 40, right: 10, bottom: 20, left: 50},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var x = d3.scale.linear()
+        .domain([0, xMax])
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .domain([0, yMax])
+        .range([height, 0]);
+
+    var color = ["#188FAC"]
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .tickSize(0)
+        .tickPadding(6)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickSize(-width)
+        .tickPadding(5)
+        .orient("left")
+        .tickFormat(function(d) {return d+"s"});
+
+    var line = d3.svg.line()
+        .x(function(d) {
+          return x(d["x"])
+        })
+        .y(function(d) {
+          return y(d["avg"])
+        })
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    while(i < n){
+      svg.append("path").attr("d", line(data))
+      i++
+    }
+
+  </script>
+</html>
